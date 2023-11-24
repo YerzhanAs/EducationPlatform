@@ -12,6 +12,7 @@ public class CourseDTO {
     private Long id;
     private String name;
     private String description;
+    private String link;
     private int levelDifficulty;
     private Date dateCreated;
 }

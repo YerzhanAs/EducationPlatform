@@ -29,6 +29,9 @@ public class Course {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "link")
+    private String link;
+
     @Column(name = "date_created")
     @Temporal(TemporalType.DATE)
     private Date dateCreated;

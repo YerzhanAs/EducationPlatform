@@ -1,9 +1,7 @@
 package com.example.authsystemsaas.mapper;
 
 import com.example.authsystemsaas.entities.Course;
-import com.example.authsystemsaas.entities.User;
 import com.example.authsystemsaas.models.dto.CourseDTO;
-import com.example.authsystemsaas.models.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

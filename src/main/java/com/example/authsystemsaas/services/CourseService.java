@@ -34,8 +34,13 @@ public class CourseService {
     private final CourseMapper courseMapper;
 
     public List<CourseDTO> findAll() {
-        return courseRepository.findAll().stream().map(courseMapper::convertToDTO).
-                collect(Collectors.toList());
+        List<Course> courses = courseRepository.findAll();
+
+        if (courses.isEmpty()) {
+            throw new NotFoundException("No courses found");
+        }
+
+        return courses.stream().map(courseMapper::convertToDTO).collect(Collectors.toList());
     }
 
     public CourseDTO findById(Long id) {
@@ -63,16 +68,10 @@ public class CourseService {
         enrollmentRepository.save(enrollment);
     }
 
-    public User getCurrentUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userRepository.findByUsername(authentication.getName())
-                .orElseThrow(() -> new NotFoundException("User not found with email " + authentication.getName()));
-        return currentUser;
-    }
-
     @Transactional
-    public Course saveCourse(CourseDTO courseDTO){
-       return courseRepository.save(courseMapper.convertToCourse(courseDTO));
+    public void saveCourse(CourseDTO courseDTO){
+        courseDTO.setDateCreated(new Date());
+        courseRepository.save(courseMapper.convertToCourse(courseDTO));
     }
 
     @Transactional
@@ -81,17 +80,28 @@ public class CourseService {
     }
 
     @Transactional
-    public Course updateCourse(Long courseId, CourseDTO courseDTO) {
-         Course course = courseRepository.findById(courseId).orElseThrow(() ->new NotFoundException("Course not found with id " + courseId));
+    public void updateCourse(Long courseId, CourseDTO courseDTO) {
+        Course course = courseRepository.findById(courseId).orElseThrow(() ->new NotFoundException("Course not found with id " + courseId));
 
         Course updatedCourse = courseMapper.convertToCourse(courseDTO);
 
+        if (updatedCourse.getDescription() != null) {
+            course.setDescription(updatedCourse.getDescription());
+        }
+
         course.setName(updatedCourse.getName());
-        course.setDescription(updatedCourse.getDescription());
         course.setLevelDifficulty(updatedCourse.getLevelDifficulty());
+        course.setLink(updatedCourse.getLink());
         course.setDateUpdated(new Date());
 
-        return courseRepository.save(course);
+         courseRepository.save(course);
     }
+
+    public User getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findByUsername(authentication.getName())
+                .orElseThrow(() -> new NotFoundException("User not found with email " + authentication.getName()));
+    }
+
 
 }

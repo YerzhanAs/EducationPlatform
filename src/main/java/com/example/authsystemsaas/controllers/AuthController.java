@@ -25,14 +25,14 @@ public class AuthController {
 
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> authUser(@RequestBody LoginRequest loginRequest) {
 
         LoginResponse loginResponse = authService.checkLogin(loginRequest);
         return ResponseEntity.ok(loginResponse);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupRequest signupRequest) {
 
         MessageResponse messageResponse = authService.registerUser(signupRequest);
         return ResponseEntity.ok(messageResponse);
