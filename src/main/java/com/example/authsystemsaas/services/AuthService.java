@@ -11,6 +11,7 @@ import com.example.authsystemsaas.repositories.RoleRepository;
 import com.example.authsystemsaas.repositories.UserRepository;
 import com.example.authsystemsaas.security.UserDetailsImpl;
 import com.example.authsystemsaas.security.jwt.JwtUtils;
+import com.example.authsystemsaas.utils.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,9 +37,7 @@ public class AuthService {
 
     private final UserRepository userRespository;
 
-
     private final RoleRepository roleRepository;
-
 
     private final PasswordEncoder passwordEncoder;
 
@@ -84,6 +83,8 @@ public class AuthService {
         User user = createUserFromSignupRequest(signupRequest);
         userRespository.save(user);
 
+        System.out.println(user.getRoles().size());
+
         response.setMessage("User CREATED");
         return response;
     }
@@ -103,8 +104,19 @@ public class AuthService {
             roles.add(findRoleByName(ERole.ROLE_USER));
         } else {
             reqRoles.forEach(roleName -> {
-                Role role = findRoleByName(ERole.valueOf(roleName));
-                roles.add(role);
+                switch (roleName){
+                    case "admin":
+                        Role roleAdmin = findRoleByName(ERole.ROLE_ADMIN);
+                        roles.add(roleAdmin);
+                        break;
+                    case "mod":
+                        Role roleMod = findRoleByName(ERole.ROLE_MODERATOR);
+                        roles.add(roleMod);
+                        break;
+                    default:
+                        Role roleUser = findRoleByName(ERole.ROLE_USER);
+                        roles.add(roleUser);
+                }
             });
         }
 
@@ -115,7 +127,7 @@ public class AuthService {
     private Role findRoleByName(ERole roleName) {
         return roleRepository
                 .findByName(roleName)
-                .orElseThrow(() -> new RuntimeException("Error, Role " + roleName + " is not found"));
+                .orElseThrow(() -> new NotFoundException("Error, Role " + roleName + " is not found"));
     }
 
 

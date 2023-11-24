@@ -12,10 +12,11 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 @CrossOrigin(origins =  "*", maxAge = 3600)
 @RequiredArgsConstructor
 public class AuthController {
@@ -32,14 +33,10 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
 
         MessageResponse messageResponse = authService.registerUser(signupRequest);
         return ResponseEntity.ok(messageResponse);
     }
-
-
-
-
 
 }

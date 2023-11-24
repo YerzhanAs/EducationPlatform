@@ -1,6 +1,5 @@
 package com.example.authsystemsaas.models.dto;
 
-
 import com.example.authsystemsaas.entities.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,12 +8,14 @@ import lombok.Setter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDTO {
+public class UserUpdateDTO {
+
     private Long id;
 
     @NotEmpty(message = "The name  is required.")
@@ -25,6 +26,8 @@ public class UserDTO {
     @Email(message = "The email address is invalid")
     private String email;
 
+    @NotEmpty(message = "The password  is required.")
+    private String password;
 
-    private Set<Role> roles;
+    private Set<String> roles;;
 }

@@ -1,10 +1,9 @@
-package com.example.authsystemsaas.utils.exception.message;
+package com.example.authsystemsaas.models.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ErrorResponse {

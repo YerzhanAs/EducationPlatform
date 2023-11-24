@@ -6,6 +6,7 @@ import com.example.authsystemsaas.entities.User;
 import com.example.authsystemsaas.mapper.CourseMapper;
 import com.example.authsystemsaas.models.dto.CourseDTO;
 
+import com.example.authsystemsaas.models.dto.CourseUpdateDTO;
 import com.example.authsystemsaas.repositories.CourseRepository;
 import com.example.authsystemsaas.repositories.EnrollmentRepository;
 import com.example.authsystemsaas.repositories.UserRepository;
@@ -80,19 +81,16 @@ public class CourseService {
     }
 
     @Transactional
-    public void updateCourse(Long courseId, CourseDTO courseDTO) {
+    public void updateCourse(Long courseId, CourseUpdateDTO courseUpdateDTO) {
         Course course = courseRepository.findById(courseId).orElseThrow(() ->new NotFoundException("Course not found with id " + courseId));
 
-        Course updatedCourse = courseMapper.convertToCourse(courseDTO);
+        Course updatedCourse = courseMapper.convertToCourse(courseUpdateDTO);
 
-        if (updatedCourse.getDescription() != null) {
             course.setDescription(updatedCourse.getDescription());
-        }
-
-        course.setName(updatedCourse.getName());
-        course.setLevelDifficulty(updatedCourse.getLevelDifficulty());
-        course.setLink(updatedCourse.getLink());
-        course.setDateUpdated(new Date());
+            course.setName(updatedCourse.getName());
+            course.setLevelDifficulty(updatedCourse.getLevelDifficulty());
+            course.setLink(updatedCourse.getLink());
+            course.setDateUpdated(new Date());
 
          courseRepository.save(course);
     }

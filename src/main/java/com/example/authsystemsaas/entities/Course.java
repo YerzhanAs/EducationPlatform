@@ -1,17 +1,16 @@
 package com.example.authsystemsaas.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,9 +23,11 @@ public class Course {
     private Long id;
 
     @Column(name = "name")
+    @Size(min=2, max=100, message = "The length of name course must be between 2 and 100 characters.")
     private String name;
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    @Size(min=2, max=500, message = "The length of name course must be between 2 and 500 characters.")
     private String description;
 
     @Column(name = "link")
