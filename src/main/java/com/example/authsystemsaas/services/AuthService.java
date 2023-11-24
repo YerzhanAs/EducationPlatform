@@ -11,6 +11,7 @@ import com.example.authsystemsaas.repositories.RoleRepository;
 import com.example.authsystemsaas.repositories.UserRepository;
 import com.example.authsystemsaas.security.UserDetailsImpl;
 import com.example.authsystemsaas.security.jwt.JwtUtils;
+import com.example.authsystemsaas.utils.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -115,7 +116,7 @@ public class AuthService {
     private Role findRoleByName(ERole roleName) {
         return roleRepository
                 .findByName(roleName)
-                .orElseThrow(() -> new RuntimeException("Error, Role " + roleName + " is not found"));
+                .orElseThrow(() -> new NotFoundException("Error, Role " + roleName + " is not found"));
     }
 
 

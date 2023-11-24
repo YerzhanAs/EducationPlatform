@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -35,7 +36,7 @@ public class CourseController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<HttpStatus> save(@RequestBody CourseDTO courseDTO) {
+    public ResponseEntity<HttpStatus> save(@Valid @RequestBody CourseDTO courseDTO) {
         courseService.saveCourse(courseDTO);
         return  ResponseEntity.ok(HttpStatus.OK);
     }
@@ -47,7 +48,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@RequestBody CourseDTO courseDTO,
+    public ResponseEntity<HttpStatus> update(@Valid @RequestBody CourseDTO courseDTO,
                                              @PathVariable("id") Long id) {
         courseService.updateCourse(id, courseDTO);
         return  ResponseEntity.ok(HttpStatus.OK);

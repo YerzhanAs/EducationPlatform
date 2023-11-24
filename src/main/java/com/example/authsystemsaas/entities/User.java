@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,13 +28,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "The name address is required.")
+    @Size(min=2, max=100, message = "The length of username must be between 2 and 100 characters.")
     private String username;
 
+    @NotEmpty(message = "The email address is required.")
+    @Email(message = "The email address is invalid")
     private String email;
 
+    @NotEmpty(message = "The password  is required.")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

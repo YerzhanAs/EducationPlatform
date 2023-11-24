@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 
 @RestController
@@ -32,14 +33,10 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
 
         MessageResponse messageResponse = authService.registerUser(signupRequest);
         return ResponseEntity.ok(messageResponse);
     }
-
-
-
-
 
 }

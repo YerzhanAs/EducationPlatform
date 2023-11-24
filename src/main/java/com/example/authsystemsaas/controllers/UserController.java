@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> update (@RequestBody UserDTO userDTO,
+    public ResponseEntity<HttpStatus> update (@Valid @RequestBody UserDTO userDTO,
                                               @PathVariable("id") Long id){
 
         userService.updateUser(id,userDTO);
@@ -44,7 +45,7 @@ public class UserController {
 
     @PostMapping("/save")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> save(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<HttpStatus> save(@Valid @RequestBody UserDTO userDTO) {
         userService.saveUser(userDTO);
         return  ResponseEntity.ok(HttpStatus.OK);
     }
