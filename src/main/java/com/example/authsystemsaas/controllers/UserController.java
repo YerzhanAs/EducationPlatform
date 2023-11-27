@@ -2,7 +2,6 @@ package com.example.authsystemsaas.controllers;
 
 
 import com.example.authsystemsaas.models.dto.UserDTO;
-import com.example.authsystemsaas.models.dto.UserUpdateDTO;
 import com.example.authsystemsaas.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/user")
 @CrossOrigin(origins =  "*", maxAge = 3600)
 @RequiredArgsConstructor
 public class UserController {
@@ -29,10 +28,10 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> update (@Valid @RequestBody UserUpdateDTO userUpdateDTO,
+    public ResponseEntity<HttpStatus> update (@Valid @RequestBody UserDTO userDTO,
                                               @PathVariable("id") Long id){
 
-        userService.updateUser(id, userUpdateDTO);
+        userService.updateUser(id,userDTO);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -46,8 +45,8 @@ public class UserController {
 
     @PostMapping("/save")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> save(@Valid @RequestBody UserUpdateDTO userUpdateDTO) {
-        userService.saveUser(userUpdateDTO);
+    public ResponseEntity<HttpStatus> save(@Valid @RequestBody UserDTO userDTO) {
+        userService.saveUser(userDTO);
         return  ResponseEntity.ok(HttpStatus.OK);
     }
 }
