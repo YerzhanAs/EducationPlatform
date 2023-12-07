@@ -2,6 +2,7 @@ package com.example.authsystemsaas.security.filter;
 
 import com.example.authsystemsaas.security.jwt.JwtUtils;
 import com.example.authsystemsaas.services.impl.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,7 @@ import java.io.IOException;
 
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
+
 
     @Autowired
     private JwtUtils jwtUtils;

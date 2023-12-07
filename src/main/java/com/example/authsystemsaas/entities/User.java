@@ -39,15 +39,14 @@ public class User {
     @NotEmpty(message = "The password  is required.")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+//    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Set<Enrollment> enrollments;
 
     @OneToMany(mappedBy = "teacher")

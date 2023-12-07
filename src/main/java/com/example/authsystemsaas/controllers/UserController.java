@@ -2,6 +2,7 @@ package com.example.authsystemsaas.controllers;
 
 
 import com.example.authsystemsaas.models.dto.UserDTO;
+import com.example.authsystemsaas.models.dto.UserUpdateDTO;
 import com.example.authsystemsaas.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,10 +29,10 @@ public class UserController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> update (@Valid @RequestBody UserDTO userDTO,
+    public ResponseEntity<HttpStatus> update (@Valid @RequestBody UserUpdateDTO userUpdateDTO,
                                               @PathVariable("id") Long id){
 
-        userService.updateUser(id,userDTO);
+        userService.updateUser(id,userUpdateDTO);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -45,8 +46,8 @@ public class UserController {
 
     @PostMapping("/save")
     @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
-    public ResponseEntity<HttpStatus> save(@Valid @RequestBody UserDTO userDTO) {
-        userService.saveUser(userDTO);
+    public ResponseEntity<HttpStatus> save(@Valid @RequestBody UserUpdateDTO userUpdateDTO) {
+        userService.saveUser(userUpdateDTO);
         return  ResponseEntity.ok(HttpStatus.OK);
     }
 }

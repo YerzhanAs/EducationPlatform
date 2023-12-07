@@ -1,6 +1,7 @@
 package com.example.authsystemsaas.controllers;
 
 import com.example.authsystemsaas.models.dto.CourseDTO;
+import com.example.authsystemsaas.models.dto.CourseUpdateDTO;
 import com.example.authsystemsaas.services.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,9 +48,9 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@RequestBody CourseDTO courseDTO,
+    public ResponseEntity<HttpStatus> update(@RequestBody CourseUpdateDTO courseUpdateDTO,
                                              @PathVariable("id") Long id) {
-        courseService.updateCourse(id, courseDTO);
+        courseService.updateCourse(id, courseUpdateDTO);
         return  ResponseEntity.ok(HttpStatus.OK);
     }
 
